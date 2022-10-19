@@ -9,7 +9,8 @@ const getUsuario = (req, res = response) => {
 }
 
 const createUsuario = (req, res = response) => {
-    res.status(200).json({ message: 'post users - controller' })
+    const body = req.body
+    res.status(200).json({ message: 'post users - controller', user: body })
 }
 
 const updateUsuario = (req, res = response) => {
