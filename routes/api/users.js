@@ -1,28 +1,20 @@
+const { getUsuarios, getUsuario, createUsuario, updateUsuario, deleteUsuario } = require('../../controllers/users')
+
 const router = require('express').Router()
 
+// Get all users
+router.get('/', getUsuarios)
 
-router.get('/', (req, res) => {
-    // router code here
-    res.status(200).json({ message: 'get users' })
-})
+// Get one user
+router.get('/:id', getUsuario)
 
+// Create a user
+router.post('/', createUsuario)
 
-router.get('/:id', (req, res) => {
-    res.status(200).json({ message: 'get user', id: req.params.id })
-})
+// Update a user
+router.put('/:id', updateUsuario)
 
-router.post('/', (req, res) => {
-    res.status(200).json({ message: 'post users' })
-})
-
-router.put('/:id', (req, res) => {
-    res.status(200).json({ message: 'put users' })
-})
-
-router.delete('/:id', (req, res) => {
-    res.status(200).json({ message: 'delete users' })
-})
-
-
+// Delete a user
+router.delete('/:id', deleteUsuario)
 
 module.exports = router
