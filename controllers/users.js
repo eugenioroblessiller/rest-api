@@ -1,7 +1,8 @@
 const { response } = require('express')
 
 const getUsuarios = (req, res = response) => {
-    res.status(200).json({ message: 'get users - controller' })
+    const query = req.query
+    res.status(200).json({ message: 'get users - controller', query })
 }
 
 const getUsuario = (req, res = response) => {
