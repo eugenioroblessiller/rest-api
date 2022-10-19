@@ -6,9 +6,10 @@ const logger = require('morgan');
 const cors = require('cors')
 
 const indexRouter = require('./routes/web/index');
-const usersRouter = require('./routes/web/users');
-const helloWorld = require('./routes/api/helloWorld')
+// const usersRouter = require('./routes/web/users');
+const usersRouter = require('./routes/api/users')
 
+  
 const app = express();
 
 // view engine setup
@@ -22,9 +23,9 @@ app.use(cookieParser());
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')));
 
+// routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/', helloWorld)
+app.use('/api', usersRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

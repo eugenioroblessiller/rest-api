@@ -1,0 +1,4 @@
+name: rest-api
+packages:
+  - path: routes/api
+  - path: routes/web
