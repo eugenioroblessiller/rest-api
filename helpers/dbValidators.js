@@ -23,4 +23,11 @@ const emailExist = async (email = '') => {
     }
 }
 
-module.exports = { isRoleValid, emailExist }
+const userExistById = async (id = '') => {
+    const userExist = await User.findById(id)
+    if (!userExist) {
+        throw new Error(`This user by id ${id} is NOT register in DB`)
+    }
+}
+
+module.exports = { isRoleValid, emailExist, userExistById }
