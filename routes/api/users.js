@@ -1,5 +1,5 @@
 const { getUsuarios, getUsuario, createUsuario, updateUsuario, deleteUsuario } = require('../../controllers/users')
-
+const { check } = require('express-validator');
 const router = require('express').Router()
 
 // Get all users
@@ -9,7 +9,11 @@ router.get('/', getUsuarios)
 router.get('/:id', getUsuario)
 
 // Create a user
-router.post('/', createUsuario)
+router.post('/',
+    [
+        check('email', 'Email is not valid').isEmail()
+    ],
+    createUsuario)
 
 // Update a user
 router.put('/:id', updateUsuario)

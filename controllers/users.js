@@ -1,4 +1,8 @@
 const { response } = require('express')
+const bcrypt = require('bcryptjs');
+
+const User = require('../models/user');
+const { validationResult } = require('express-validator');
 
 const getUsuarios = (req, res = response) => {
     const query = req.query
@@ -9,9 +13,29 @@ const getUsuario = (req, res = response) => {
     res.status(200).json({ message: 'get user - controller', id: req.params.id })
 }
 
-const createUsuario = (req, res = response) => {
-    const body = req.body
-    res.status(200).json({ message: 'post users - controller', user: body })
+const createUsuario = async (req, res = response) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { name, email, password, rol } = req.body
+    const user = new User({ name, email, password, rol })
+    //check for password
+    const emailExist = await User.findOne({ email })
+    if (emailExist) {
+        return res.status(400).json({
+            message: 'Email is taken'
+        })
+    }
+
+    // Encrypt 
+    const salt = bcrypt.genSaltSync(10);
+    user.password = bcrypt.hashSync(password, salt);
+
+    // Save to DB
+    await user.save()
+    res.status(200).json({ message: 'post users - controller', user })
 }
 
 const updateUsuario = (req, res = response) => {
