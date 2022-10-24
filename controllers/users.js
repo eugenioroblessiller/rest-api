@@ -16,7 +16,6 @@ const getUsuario = (req, res = response) => {
 const createUsuario = async (req, res = response) => {
     const { name, email, password, rol } = req.body
     const user = new User({ name, email, password, rol })
-   
 
     // Encrypt 
     const salt = bcrypt.genSaltSync(10);
@@ -27,8 +26,17 @@ const createUsuario = async (req, res = response) => {
     res.status(200).json({ message: 'post users - controller', user })
 }
 
-const updateUsuario = (req, res = response) => {
-    res.status(200).json({ message: 'put user - controller', id: req.params.id })
+const updateUsuario = async (req, res = response) => {
+    const { id } = req.params
+    const { password, google, ...rest } = req.body
+
+    if (password) {
+        const salt = bcrypt.genSaltSync(10);
+        rest.password = bcrypt.hashSync(password, salt);
+    }
+
+    const user = await User.findByIdAndUpdate(id, rest)
+    res.status(200).json({ message: 'put user - controller', user })
 }
 
 const deleteUsuario = (req, res) => {
