@@ -28,7 +28,7 @@ const createUsuario = async (req, res = response) => {
 
 const updateUsuario = async (req, res = response) => {
     const { id } = req.params
-    const { password, google, ...rest } = req.body
+    const { _id, password, google, ...rest } = req.body
 
     if (password) {
         const salt = bcrypt.genSaltSync(10);
