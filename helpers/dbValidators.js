@@ -1,6 +1,10 @@
 const Rol = require('../models/rol')
+const User = require('../models/user')
 
-
+/**
+ * It checks if the role is valid.
+ * @param [rol] - The role to be validated.
+ */
 const isRoleValid = async (rol = '') => {
     const rolExist = await Rol.findOne({ rol })
     if (!rolExist) {
@@ -8,4 +12,15 @@ const isRoleValid = async (rol = '') => {
     }
 }
 
-module.exports = { isRoleValid }
+/**
+ * It checks if the email exists in the database
+ * @param [email] - The email address to check.
+ */
+const emailExist = async (email = '') => {
+    const emailExist = await User.findOne({ email })
+    if (emailExist) {
+        throw new Error(`This ${email} is register in DB`)
+    }
+}
+
+module.exports = { isRoleValid, emailExist }
