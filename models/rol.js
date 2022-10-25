@@ -6,6 +6,6 @@ const rolSchema = new Schema({
         type: String,
         required: [true, "Rol is required"]
     }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Rol', rolSchema)

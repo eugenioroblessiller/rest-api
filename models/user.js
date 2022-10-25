@@ -32,10 +32,11 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     }
-});
+}, { timestamps: true });
 
 userSchema.methods.toJSON = function () {
-    const { __v, password, ...user } = this.toObject()
+    const { __v, _id, password, ...user } = this.toObject()
+    user.id = _id
     return user
 }
 module.exports = mongoose.model('User', userSchema)
