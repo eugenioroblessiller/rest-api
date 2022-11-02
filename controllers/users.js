@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
 const { emailExist } = require('../helpers/dbValidators');
-const user = require('../models/user');
 
 const getUsuarios = async (req, res = response) => {
     const { limit = 5, from = 0 } = req.query
@@ -53,11 +52,11 @@ const updateUsuario = async (req, res = response) => {
 
 const deleteUsuario = async (req, res) => {
     const { id } = req.params
-
+    
     // Deleting a user from database
     // const user = await User.findByIdAndDelete(id)
 
-    // Updating status for deleting pourpuses
+    // Updating status for deleting pourpuses if user is ADMIN_ROLE
     const user = await User.findByIdAndUpdate(id, { state: false }, { new: true })
     res.status(200).json({ message: 'delete users', user })
 }
