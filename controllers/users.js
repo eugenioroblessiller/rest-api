@@ -3,10 +3,21 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
 const { emailExist } = require('../helpers/dbValidators');
+const user = require('../models/user');
 
-const getUsuarios = (req, res = response) => {
-    const query = req.query
-    res.status(200).json({ message: 'get users - controller', query })
+const getUsuarios = async (req, res = response) => {
+    const { limit = 5, from = 0 } = req.query
+    const query = { state: true }
+
+    const [userCounts, users] = await Promise.all([
+        User.countDocuments(query),
+        User.find(query)
+            .limit(+limit)
+            .skip(+from)
+            .sort('createdAt')
+    ])
+
+    res.status(200).json({ userCounts, users })
 }
 
 const getUsuario = (req, res = response) => {
@@ -35,12 +46,20 @@ const updateUsuario = async (req, res = response) => {
         rest.password = bcrypt.hashSync(password, salt);
     }
 
-    const user = await User.findByIdAndUpdate(id, rest)
+    const user = await User.findByIdAndUpdate(id, rest, { new: true })
+    console.log(user, 'usuario editado------->')
     res.status(200).json({ message: 'put user - controller', user })
 }
 
-const deleteUsuario = (req, res) => {
-    res.status(200).json({ message: 'delete users', id: req.params.id })
+const deleteUsuario = async (req, res) => {
+    const { id } = req.params
+
+    // Deleting a user from database
+    // const user = await User.findByIdAndDelete(id)
+
+    // Updating status for deleting pourpuses
+    const user = await User.findByIdAndUpdate(id, { state: false }, { new: true })
+    res.status(200).json({ message: 'delete users', user })
 }
 
 
