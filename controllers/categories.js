@@ -7,5 +7,20 @@ const getCategories = (req, res = response) => {
     })
 }
 
+const getCategory = (req, res) => {
 
-module.exports = { getCategories }
+}
+
+const createCategory = (req, res) => {
+
+}
+
+const updateCategory = (req, res) => {
+
+}
+
+const deleteCategory = (req, res) => {
+
+}
+
+module.exports = { getCategories, getCategory, createCategory, updateCategory, deleteCategory }

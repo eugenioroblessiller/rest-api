@@ -5,5 +5,21 @@ const getProducts = (req, res = response) => {
     })
 }
 
+const getProduct = (req, res) => {
 
-module.exports = { getProducts }
+}
+
+const createProduct = (req, res) => {
+
+}
+
+const updateProduct = (req, res) => {
+
+}
+
+const deleteProduct = (req, res) => {
+
+}
+
+
+module.exports = { getProducts, getProduct, createProduct, updateProduct, deleteProduct }
