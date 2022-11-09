@@ -5,7 +5,7 @@ const Product = require("../models/product")
 
 
 const { ObjectId } = require('mongoose').Types
-const collections = ['users', 'categories', 'prodcuts', 'rols']
+const collections = ['users', 'categories', 'products', 'rols']
 
 
 const searchUsers = async (term = '', res) => {
@@ -51,7 +51,7 @@ const searchCategories = async (term = '', res) => {
 const searchProducts = async (term = '', res) => {
     const isMongoId = ObjectId.isValid(term)
     if (isMongoId) {
-        const prodcut = await Product.findById(term)
+        const prodcut = await Product.findById(term).populate('category', 'name')
         return res.json({
             results: (prodcut) ? [prodcut] : []
         })
@@ -62,7 +62,7 @@ const searchProducts = async (term = '', res) => {
     const products = await Product.find({
         $or: [{ name: regex }],
         $and: [{ state: true }]
-    })
+    }).populate('category', 'name')
     return res.json({
         results: products
     })
@@ -84,7 +84,7 @@ const search = (req = request, res = response) => {
         case 'categories':
             searchCategories(term, res)
             break;
-        case 'prodcuts':
+        case 'products':
             searchProducts(term, res)
             break;
 
