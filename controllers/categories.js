@@ -78,9 +78,6 @@ const updateCategory = async (req, res) => {
 const deleteCategory = async (req, res) => {
     const { id } = req.params
 
-    // Deleting a user from database
-    // const user = await User.findByIdAndDelete(id)
-
     // Updating status for deleting pourpuses if user is ADMIN_ROLE
     const category = await Category.findByIdAndUpdate(id, { state: false }, { new: true })
     res.status(200).json({ message: 'delete category', category })

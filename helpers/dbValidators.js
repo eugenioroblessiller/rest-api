@@ -1,4 +1,5 @@
 const Category = require('../models/category')
+const Product = require('../models/product')
 const Rol = require('../models/rol')
 const User = require('../models/user')
 
@@ -46,6 +47,13 @@ const categoryExistById = async (id = '') => {
     }
 }
 
+const productExistById = async (id = '') => {
+    const productExist = await Product.findById(id)
+    if (!productExist) {
+        throw new Error(`This product by id ${id} is NOT register in DB`)
+    }
+}
 
 
-module.exports = { isRoleValid, emailExist, userExistById, categoryExistById }
+
+module.exports = { isRoleValid, emailExist, userExistById, categoryExistById, productExistById }
