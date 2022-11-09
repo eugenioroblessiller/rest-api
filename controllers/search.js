@@ -1,5 +1,9 @@
 const { request, response } = require("express");
 const User = require("../models/user");
+const Category = require("../models/category")
+const Product = require("../models/product")
+
+
 const { ObjectId } = require('mongoose').Types
 const collections = ['users', 'categories', 'prodcuts', 'rols']
 
@@ -24,6 +28,46 @@ const searchUsers = async (term = '', res) => {
     })
 }
 
+const searchCategories = async (term = '', res) => {
+    const isMongoId = ObjectId.isValid(term)
+    if (isMongoId) {
+        const category = await Category.findById(term)
+        return res.json({
+            results: (category) ? [category] : []
+        })
+    }
+
+    const regex = new RegExp(term, 'i')
+
+    const categories = await Category.find({
+        $or: [{ name: regex }],
+        $and: [{ state: true }]
+    })
+    return res.json({
+        results: categories
+    })
+}
+
+const searchProducts = async (term = '', res) => {
+    const isMongoId = ObjectId.isValid(term)
+    if (isMongoId) {
+        const prodcut = await Product.findById(term)
+        return res.json({
+            results: (prodcut) ? [prodcut] : []
+        })
+    }
+
+    const regex = new RegExp(term, 'i')
+
+    const products = await Product.find({
+        $or: [{ name: regex }],
+        $and: [{ state: true }]
+    })
+    return res.json({
+        results: products
+    })
+}
+
 const search = (req = request, res = response) => {
     const { collection, term } = req.params
 
@@ -38,10 +82,10 @@ const search = (req = request, res = response) => {
             searchUsers(term, res)
             break;
         case 'categories':
-
+            searchCategories(term, res)
             break;
         case 'prodcuts':
-
+            searchProducts(term, res)
             break;
 
         default:
