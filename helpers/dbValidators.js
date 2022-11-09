@@ -1,3 +1,4 @@
+const Category = require('../models/category')
 const Rol = require('../models/rol')
 const User = require('../models/user')
 
@@ -30,4 +31,13 @@ const userExistById = async (id = '') => {
     }
 }
 
-module.exports = { isRoleValid, emailExist, userExistById }
+const categoryExistById = async (id = '') => {
+    const categoryExist = await Category.findById(id)
+    if (!categoryExist) {
+        throw new Error(`This category by id ${id} is NOT register in DB`)
+    }
+}
+
+
+
+module.exports = { isRoleValid, emailExist, userExistById, categoryExistById }
