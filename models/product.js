@@ -37,4 +37,10 @@ const productoSchema = new Schema({
     }
 })
 
+productoSchema.methods.toJSON = function () {
+    const { __v, state, _id, ...product } = this.toObject()
+    product.id = _id
+    return product
+}
+
 module.exports = mongoose.model('Product', productoSchema)
