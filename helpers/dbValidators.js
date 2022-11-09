@@ -24,6 +24,10 @@ const emailExist = async (email = '') => {
     }
 }
 
+/**
+ * It checks if a user exists in the database by their id
+ * @param [id] - The id of the user you want to check.
+ */
 const userExistById = async (id = '') => {
     const userExist = await User.findById(id)
     if (!userExist) {
@@ -31,6 +35,10 @@ const userExistById = async (id = '') => {
     }
 }
 
+/**
+ * It will throw an error if the category by id is not register in DB
+ * @param [id] - The id of the category to be checked.
+ */
 const categoryExistById = async (id = '') => {
     const categoryExist = await Category.findById(id)
     if (!categoryExist) {
