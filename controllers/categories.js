@@ -63,12 +63,27 @@ const createCategory = async (req, res) => {
     })
 }
 
-const updateCategory = (req, res) => {
+const updateCategory = async (req, res) => {
+    const { id } = req.params
+    const { _id, state, user, ...rest } = req.body
 
+    rest.name = rest.name.toUpperCase()
+    rest.user = req.user._id
+
+    const category = await Category.findByIdAndUpdate(id, rest, { new: true })
+        .populate('user', 'name')
+    res.status(200).json({ message: 'put category - controller', category })
 }
 
-const deleteCategory = (req, res) => {
+const deleteCategory = async (req, res) => {
+    const { id } = req.params
 
+    // Deleting a user from database
+    // const user = await User.findByIdAndDelete(id)
+
+    // Updating status for deleting pourpuses if user is ADMIN_ROLE
+    const category = await Category.findByIdAndUpdate(id, { state: false }, { new: true })
+    res.status(200).json({ message: 'delete category', category })
 }
 
 module.exports = { getCategories, getCategory, createCategory, updateCategory, deleteCategory }

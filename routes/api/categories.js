@@ -21,9 +21,19 @@ router.post('/', [
     validateFields
 ], createCategory)
 
-router.put('/:id', updateCategory)
+router.put('/:id', [
+    validateJWT,
+    check('id', 'Is not an valid id').isMongoId(),
+    check('id').custom(categoryExistById),
+    check('name', 'Name is required').not().isEmpty(),
+    validateFields
+], updateCategory)
 
-router.delete('/:id', deleteCategory)
+router.delete('/:id',[
+    check('id', 'Is not an valid id').isMongoId(),
+    check('id').custom(categoryExistById),
+    validateFields
+], deleteCategory)
 
 
 module.exports = router
