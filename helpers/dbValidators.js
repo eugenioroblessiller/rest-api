@@ -47,6 +47,11 @@ const categoryExistById = async (id = '') => {
     }
 }
 
+/**
+ * It's a function that returns a promise that resolves to a boolean value that indicates if a product
+ * exists in the database or not
+ * @param [id] - The id of the product to be deleted.
+ */
 const productExistById = async (id = '') => {
     const productExist = await Product.findById(id)
     if (!productExist) {
@@ -54,6 +59,19 @@ const productExistById = async (id = '') => {
     }
 }
 
+/**
+ * It throws an error if the collection is not included in the collections array
+ * @param [collection] - The collection you want to check
+ * @param [collections] - The list of collections that are allowed to be accessed.
+ */
+const validateCollectionsAllow = (collection = '', collections = []) => {
+    const isInclude = collections.includes(collection)
+    if (!isInclude) {
+        throw new Error(`This collection: ${collection} is not allowed, collections allow are: ${collections}`)
+    }
+    return true
+}
 
 
-module.exports = { isRoleValid, emailExist, userExistById, categoryExistById, productExistById }
+
+module.exports = { isRoleValid, emailExist, userExistById, categoryExistById, productExistById, validateCollectionsAllow }
