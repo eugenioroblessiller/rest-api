@@ -8,6 +8,7 @@ const uploadFile = async (req, res) => {
     }
 
     try {
+        // const completePath = await uploadFileHelper(req.files, undefined, 'pdf')
         const completePath = await uploadFileHelper(req.files, ['pdf'], 'pdf')
         return res.json({
             completePath
