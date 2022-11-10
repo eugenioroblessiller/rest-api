@@ -13,6 +13,7 @@ const usersRouter = require('./routes/api/users');
 const productRouter = require('./routes/api/products');
 const categoriesRouter = require('./routes/api/categories');
 const searchRouter = require('./routes/api/search');
+const uploadsRouter = require('./routes/api/uploads');
 
 const dbConnection = require('./database/config');
 
@@ -40,6 +41,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/products', productRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/search', searchRouter);
+app.use('/api/uploads', uploadsRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

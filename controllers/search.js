@@ -87,7 +87,6 @@ const search = (req = request, res = response) => {
         case 'products':
             searchProducts(term, res)
             break;
-
         default:
             res.status(500).json({
                 message: "No search is register"
