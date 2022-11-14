@@ -15,7 +15,7 @@ const uploadFileHelper = (files, validExtension = ['png', 'jpg', 'jpeg', 'gif'],
 
         // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
         const tempFileName = `${uuidv4()}.${extension}`
-        const uploadPath = path.join(__dirname, '../uploads/', directory, tempFileName);
+        const uploadPath = path.join(__dirname, '../uploads', directory, tempFileName);
 
         // Use the mv() method to place the file somewhere on your server
         file.mv(uploadPath, (err) => {
