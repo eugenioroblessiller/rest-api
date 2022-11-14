@@ -1,3 +1,6 @@
+const path = require('path')
+const fs = require('fs')
+
 const User = require('../models/user');
 const Product = require("../models/product")
 
@@ -46,7 +49,23 @@ const updateFile = async (req, res) => {
             })
     }
 
+    // Clean previus files
+    try {
+        console.log(model)
+        if (model.img) {
+            // delete image from server
+            const pathImage = path.join(__dirname, '../uploads/', collection, model.img)
+            if (fs.existsSync(pathImage)) {
+                console.log('entrando a borrar imagen', pathImage)
+                fs.unlink(pathImage)
+            }
+        }
+    } catch (error) {
+        console.error(error)
+    }
+
     const completePath = await uploadFileHelper(req.files, undefined, collection)
+    console.log(completePath)
     model.img = completePath
 
     await model.save()

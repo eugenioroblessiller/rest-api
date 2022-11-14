@@ -19,4 +19,6 @@ router.put('/:collection/:id', [
     validateFields
 ], updateFile)
 
+// router.delete('/:collection/:id', deleteFile)
+
 module.exports = router

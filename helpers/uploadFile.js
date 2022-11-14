@@ -22,7 +22,7 @@ const uploadFileHelper = (files, validExtension = ['png', 'jpg', 'jpeg', 'gif'],
             if (err)
                 return reject(err)
 
-            return resolve(uploadPath)
+            return resolve(tempFileName)
         });
     })
 }
